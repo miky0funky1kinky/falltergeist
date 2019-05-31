@@ -183,6 +183,36 @@ namespace Falltergeist
                 panelX = (renderWidth - _panel->size().width()) / 2;
             }
             panelY = (renderHeight - _panel->size().height()) / 2;
+			
+			
+			//set path
+			//WorldPath _wp = {worldMapX+mapMinX+deltaX, worldMapY+mapMinY+deltaY};
+			WorldPath _wp = {worldMapX, worldMapY};
+			
+			//moving player
+			if (worldMapX != worldDestinationMapX) {
+				worldMapX += (worldMapX < worldDestinationMapX ? 1 : -1);
+				if (worldMapX % 4 == 0)
+					worldPaths.insert(worldPaths.end(), _wp);
+			}
+			
+			if (worldMapY != worldDestinationMapY) {
+				worldMapY += (worldMapY < worldDestinationMapY ? 1 : -1);
+				
+				if (worldMapY % 4 == 0)
+					worldPaths.insert(worldPaths.end(), _wp);
+			}
+				
+				
+			SDL_Color _color = {160, 30, 30, 255};
+				
+			//draw player path
+			for (auto &path : worldPaths){
+				Game::getInstance()->renderer()->drawRect((int)path.X-deltaX+mapMinX+MAP_HOTSPOT_PATH_OFFSET_X,
+																						(int)path.Y-deltaY+mapMinY+MAP_HOTSPOT_PATH_OFFSET_Y,
+																						2, 2, _color
+																					);
+			}
 
             _panel->setPosition(Point(panelX, panelY));
             _panel->render();
@@ -204,9 +234,26 @@ namespace Falltergeist
                     if ((mapMinX<=(unsigned int)mouse->x()) && ((unsigned int)mouse->x()<=(mapMinX+mapWidth)) &&
                         (mapMinY<=(unsigned int)mouse->y()) && ((unsigned int)mouse->y()<=(mapMinY+mapHeight)))
                     {
-                        // change destination point
-                        worldMapX = mouse->x()+deltaX-mapMinX;
-                        worldMapY = mouse->y()+deltaY-mapMinY;
+						//signed int _x = (worldMapX - (mouse->x()+deltaX-mapMinX));
+						//signed int _y = (worldMapY - (mouse->y()+deltaY-mapMinY));
+						
+						//for(unsigned int i = 0; i < (100*10000); ++i){
+							//_x = (unsigned int)(worldMapX + 1);
+							//_y = (unsigned int)(worldMapY + 1);
+
+							//worldMapX = _x;
+							//worldMapY = _y;
+							
+							/**/
+							//Sleep(1000);
+
+							worldDestinationMapX = mouse->x()+deltaX-mapMinX;
+							worldDestinationMapY = mouse->y()+deltaY-mapMinY;
+
+							// change destination point
+							/*worldMapX = mouse->x()+deltaX-mapMinX;
+							worldMapY = mouse->y()+deltaY-mapMinY;*/						
+						//}
                     }
                 }
             }

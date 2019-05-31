@@ -22,6 +22,10 @@
 
 // C++ standard includes
 
+//cpp includes
+#include <vector>
+using std::vector;
+
 // Falltergeist includes
 #include "../State/State.h"
 
@@ -51,7 +55,10 @@ namespace Falltergeist
                 void onStateActivate(Event::State* event) override;
                 void onStateDeactivate(Event::State* event) override;
 
-            private:
+			private:
+				#define MAP_HOTSPOT_PATH_OFFSET_X  (16)
+				#define MAP_HOTSPOT_PATH_OFFSET_Y  (8)
+			
                 UI::Image* _panel = nullptr;
                 UI::ImageList* _tiles = nullptr;
                 UI::ImageButton* _hotspot = nullptr;
@@ -61,7 +68,15 @@ namespace Falltergeist
                 // coordinates of the player on world map
                 unsigned int worldMapX = 0;
                 unsigned int worldMapY = 0;
-
+				
+				// storing current position on move
+				// like above -> move it to player
+				unsigned int worldCurrentMapX = 0;
+                unsigned int worldCurrentMapY = 0;
+				
+				unsigned int worldDestinationMapX = 0;
+                unsigned int worldDestinationMapY = 0;
+				
                 // delta (shift of map to fit to screen)
                 signed int deltaX = 0;
                 signed int deltaY = 0;
@@ -77,6 +92,15 @@ namespace Falltergeist
                 unsigned int mapHeight = 442;  // fallout 2 map screen height
                 unsigned int mapMinX = 0;      // start X point of map screen
                 unsigned int mapMinY = 0;      // start Y point of map screen
+				
+				// map movement
+				struct WorldPath {
+					unsigned int X;
+					unsigned int Y;
+				};
+				
+				vector <WorldPath> worldPaths;
+
         };
     }
 }
