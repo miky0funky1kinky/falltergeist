@@ -28,6 +28,7 @@ using std::vector;
 
 // Falltergeist includes
 #include "../State/State.h"
+#include "../Format/Txt/CityFile.h"
 
 // Third party includes
 
@@ -100,7 +101,7 @@ namespace Falltergeist
 				};
 				
 				vector <WorldPath> worldPaths;
-
+				vector <Format::Txt::City> worldCities;
         };
     }
 }
